@@ -6,6 +6,7 @@
 
     <link rel="shortcut icon" href="./assets/logo.png" type="image/x-icon" />
     <!-- font awesome cdn -->
+    <link rel="stylesheet" href="style/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -162,6 +163,22 @@
         <h2 class="text-4xl bangla-font font-bold">একটি Lesson Select করুন।</h2>
       </div>
     </section>
+
+    <!-- Open the modal using ID.showModal() method -->
+    <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+
+    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold">Hello!</h3>
+        <p class="py-4">Press ESC key or click the button below to close</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
 
     <script src="./js/index.js"></script>
   </body>
