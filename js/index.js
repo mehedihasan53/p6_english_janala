@@ -1,3 +1,9 @@
+const createElement = (arr) => {
+    const htmlElements = arr.map((item) =>
+        `<span class="btn">${item}</span>`);
+    return htmlElements.join("");
+};
+
 loadLessons = () => {
     fetch("https://openapi.programming-hero.com/api/levels/all")
         .then((res) => res.json())
@@ -7,9 +13,57 @@ loadLessons = () => {
 const removeActiveBtn = () => {
     const removeBtn = document.querySelectorAll(".lesson-Btn");
     removeBtn.forEach((btn) => btn.classList.remove("active"));
+};
+
+const loadWordsDetails = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/word/${id}`;
+    const res = await fetch(url);
+    const details = await res.json();
+    displayWordsDetails(details.data);
+};
+
+// "word": "Eager",
+// "meaning": "আগ্রহী",
+// "pronunciation": "ইগার",
+// "level": 1,
+// "sentence": "The kids were eager to open their gifts.",
+// "points": 1,
+// "partsOfSpeech": "adjective",
+// "synonyms": [
+// "enthusiastic",
+// "excited",
+// "keen"
+// ],
+// "id": 5
+
+const displayWordsDetails = (word) => {
+    console.log(word);
+    const detailsBox = document.getElementById("details-container");
+    detailsBox.innerHTML = `
+              <div id="details-container" class="space-y-5">
+          <div class="text-2xl font-bold">
+            <h2>${word.word} ( <i class="fa-solid fa-microphone-lines"></i> :${word.pronunciation
+        })</h2>
+          </div>
+          <div class="font-bold">
+            <h2>Meaning</h2>
+            <p>${word.meaning}</p>
+          </div>
+          <div class="">
+            <h2 class="font-bold">Example</h2>
+            <p>${word.sentence}</p>
+          </div>
+
+           <div class="">
+            <h2 class="font-bold">সমার্থক শব্দ গুলো</h2>
+            <div class="">${createElement(word.synonyms)}</div>
+          </div>
+        </div>  
 
 
-}
+    `;
+    document.getElementById("word_modal").showModal();
+};
 
 function LoadLevelWords(id) {
     fetch(`https://openapi.programming-hero.com/api/level/${id}`)
@@ -48,7 +102,8 @@ const displayLessonWord = (words) => {
             }/${word.pronunciation ? word.pronunciation : "No pronunciation"
             }</div>
       <div class="flex justify-between items-center ">
-            <button onclick="my_modal_5.showModal()" class="bg-[#1A91FF10] btn hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
+            <button onclick="loadWordsDetails(${word.id
+            })" class="bg-[#1A91FF10] btn hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
             <button class="bg-[#1A91FF10] btn hover:bg-[#1A91FF80]"><i class="fa-solid fa-volume-high"></i></button>
       </div>
     </div>
