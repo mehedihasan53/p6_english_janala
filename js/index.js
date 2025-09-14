@@ -4,6 +4,12 @@ const createElement = (arr) => {
     return htmlElements.join("");
 };
 
+function pronounceWord(word) {
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = "en-US";
+    window.speechSynthesis.speak(utterance);
+}
+
 loadLessons = () => {
     fetch("https://openapi.programming-hero.com/api/levels/all")
         .then((res) => res.json())
@@ -22,19 +28,6 @@ const loadWordsDetails = async (id) => {
     displayWordsDetails(details.data);
 };
 
-// "word": "Eager",
-// "meaning": "আগ্রহী",
-// "pronunciation": "ইগার",
-// "level": 1,
-// "sentence": "The kids were eager to open their gifts.",
-// "points": 1,
-// "partsOfSpeech": "adjective",
-// "synonyms": [
-// "enthusiastic",
-// "excited",
-// "keen"
-// ],
-// "id": 5
 
 const displayWordsDetails = (word) => {
     console.log(word);
@@ -104,7 +97,9 @@ const displayLessonWord = (words) => {
       <div class="flex justify-between items-center ">
             <button onclick="loadWordsDetails(${word.id
             })" class="bg-[#1A91FF10] btn hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
-            <button class="bg-[#1A91FF10] btn hover:bg-[#1A91FF80]"><i class="fa-solid fa-volume-high"></i></button>
+
+            <button onclick="pronounceWord('${word.word}')"
+             class="bg-[#1A91FF10] btn hover:bg-[#1A91FF80]"><i class="fa-solid fa-volume-high"></i></button>
       </div>
     </div>
         `;
